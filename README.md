@@ -20,9 +20,6 @@
 
 ## 🌐 Portfolio
 
-**AI Studio:**  
-https://ai.studio/apps/d94c72f5-13a3-4142-b2ef-a6cabd6162f4
-
 **GitHub:**  
 https://github.com/itzv07/VenkateshErla-Portfolio
 
