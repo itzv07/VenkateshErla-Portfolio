@@ -430,38 +430,6 @@ A digital healthcare solution concept focused on remote consultation, wearable d
 
 ---
 
-### Web Search Engine
-
-A full-stack search application demonstrating frontend, backend, API, and database integration.
-
-**Technologies:**
-
-`React` `Node.js` `Express.js` `PostgreSQL` `Tailwind CSS`
-
----
-
-### Library Management System
-
-A Java-based application for managing library operations and database records.
-
-**Technologies:**
-
-`Java` `MySQL` `OOP`
-
----
-
-### Attendance Management Application
-
-A mobile attendance solution using authentication, Firebase, and location-based validation.
-
-**Key capabilities:**
-
-- OTP authentication
-- Firebase integration
-- Location verification
-- Attendance tracking
-
----
 
 ## 💼 Experience
 
