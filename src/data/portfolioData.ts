@@ -23,7 +23,7 @@ export const PERSONAL_INFO = {
   email: 'venkatesherla21@gmail.com',
   phone: '+91 7670872362',
   location: 'Hyderabad, India (Open to Remote & Relocation)',
-  github: 'https://github.com/erlavenkatesh',
+  github: 'https://github.com/itzv07/',
   linkedin: 'https://linkedin.com/in/erlavenkatesh',
   leetcode: 'https://leetcode.com/erlavenkatesh',
   resumeDownloadUrl: '#resume-download',
