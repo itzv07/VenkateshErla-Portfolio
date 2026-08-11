@@ -159,9 +159,9 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
         const opt = {
           margin: 0.4,
           filename: 'Venkatesh_Erla_Resume.pdf',
-          image: { type: 'jpeg', quality: 0.98 },
+          image: { type: 'jpeg' as const, quality: 0.98 },
           html2canvas: { scale: 2, useCORS: true, logging: false },
-          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' as const }
         };
 
         await html2pdf().set(opt).from(element).save();
@@ -240,10 +240,9 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
             <div className="flex items-center gap-4 text-center sm:text-left">
               <div className="w-20 h-20 sm:w-22 sm:h-22 rounded-2xl overflow-hidden border-2 border-zinc-300 shadow-md shrink-0 bg-zinc-100">
                 <img
-                  src={customAvatar || PERSONAL_INFO.avatarUrl}
+                  src={PERSONAL_INFO.avatarUrl}
                   alt={PERSONAL_INFO.name}
                   className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
                 />
               </div>
               <div>

@@ -74,7 +74,7 @@ export interface Certification {
 export interface Achievement {
   id: string;
   title: string;
-  category: 'Hackathon' | 'Academic' | 'Award' | 'Leadership';
+  category: 'Hackathon' | 'Academic' | 'Award' | 'Leadership' | 'Certification & Honor' | 'Competitive Coding' | 'Algorithms';
   date: string;
   organizer: string;
   description: string;

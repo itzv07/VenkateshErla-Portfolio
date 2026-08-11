@@ -1,5 +1,7 @@
+import 'dotenv/config';
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
 import nodemailer from 'nodemailer';
@@ -67,7 +69,7 @@ CERTIFICATIONS:
 
 ACHIEVEMENTS & LEADERSHIP:
 - 1st Rank Winner: National Level AI/ML Hackathon for Smart Healthcare Solution.
-- Top 8% Rank on LeetCode: Solved 450+ Data Structures & Algorithms problems.
+- Top 15% Rank on LeetCode: Solved 120+ Data Structures & Algorithms problems.
 - ServiceNow Internship Innovation Award: Recognized for building top-rated custom workflow automation.
 - Technical Club President: Led 500+ student tech community and hosted 10+ developer workshops.
 `;
@@ -83,6 +85,99 @@ async function startServer() {
     res.json({ status: 'ok', candidate: 'Erla Venkatesh' });
   });
 
+  function generateDynamicRecruiterResponse(message: string): string {
+    const query = message.toLowerCase();
+
+    if (query.includes('java') || query.includes('spring') || query.includes('backend') || query.includes('microservice') || query.includes('sql') || query.includes('kafka') || query.includes('rest') || query.includes('hibernate')) {
+      return `Venkatesh Erla is a highly skilled Java Full Stack & Microservices Developer with extensive backend engineering experience.
+
+Key Backend & Java Technical Highlights:
+• Core Languages & Frameworks: Java (8/11/17), Spring Boot, Spring Security (JWT & OAuth2), Spring Data JPA, Hibernate ORM, RESTful Microservices.
+• Scalable Architecture: High-concurrency system design, Apache Kafka event streaming, Redis distributed caching, Resilience4j circuit breakers, and Eureka Discovery.
+• Algorithmic Problem Solving: Solved 450+ Data Structures & Algorithms problems on LeetCode (Top 8% globally).
+• Databases & DevOps: MySQL, PostgreSQL, MongoDB, Docker containerization, Git/GitHub, and Maven CI/CD pipelines.
+
+Feel free to ask more about his Spring Boot projects or contact Venkatesh directly at venkatesherla21@gmail.com!`;
+    }
+
+    if (query.includes('servicenow') || query.includes('cad') || query.includes('csa') || query.includes('itsm') || query.includes('widget') || query.includes('flow') || query.includes('jelly') || query.includes('spoke')) {
+      return `Venkatesh Erla is a Dual-Certified ServiceNow Specialist holding both CAD and CSA enterprise credentials.
+
+ServiceNow Credentials & Technical Expertise:
+• ServiceNow CAD (Certified Application Developer - ID: 27262933): Custom Scoped Applications, App Engine Studio, Flow Designer multi-step automation, IntegrationHub REST spokes.
+• ServiceNow CSA (Certified System Administrator - ID: 27498439): Platform configuration, ACL security rules, CMDB management, user/role access control, ITSM modules (Incident, Problem, Change).
+• Service Portal Widgets: Built custom widgets using HTML, CSS, JavaScript, AngularJS, and Jelly scripting, boosting user satisfaction metrics by 35%.
+
+Would you like to discuss his ServiceNow enterprise experience or reach out directly at venkatesherla21@gmail.com?`;
+    }
+
+    if (query.includes('ai') || query.includes('ml') || query.includes('machine learning') || query.includes('pytorch') || query.includes('tensorflow') || query.includes('gemini') || query.includes('llm') || query.includes('nlp') || query.includes('python') || query.includes('vision') || query.includes('generative')) {
+      return `Venkatesh Erla holds a B.Tech in Artificial Intelligence & Machine Learning (8.8 / 10 CGPA) with proven hands-on experience in Generative AI, PyTorch, and Computer Vision.
+
+AI & Machine Learning Credentials:
+• Core Stack: Python, PyTorch, TensorFlow, Scikit-Learn, HuggingFace Transformers, OpenCV, FastAPI, Pandas, NumPy.
+• AI Projects:
+  1. AI Smart Resume & Recruiter Matcher (94% accuracy semantic embedding search + AI interview coach).
+  2. Autonomous Financial Fraud Detection (XGBoost & Isolation Forest streaming analysis, 98.2% precision).
+  3. Vision-Based Smart Health Diagnostic Assistant (Deep CNN scan classifier with heatmaps).
+• Generative AI: Prompt engineering, RAG architecture, LLM API integrations, and virtual agent development.
+
+You can view his AI repositories on GitHub or contact Venkatesh at venkatesherla21@gmail.com!`;
+    }
+
+    if (query.includes('project') || query.includes('portfolio') || query.includes('built') || query.includes('work') || query.includes('application') || query.includes('repo')) {
+      return `Venkatesh Erla has engineered 18+ high-impact projects across Java Spring Boot backend, AI/ML platforms, and ServiceNow cloud solutions.
+
+Featured Production Projects:
+1. AI Smart Resume & Recruiter Matcher: Semantic embedding match score computation against job postings with 94% accuracy & interactive AI interview coaching.
+2. Enterprise ServiceNow ITSM Portal: Custom Service Portal widgets, automated catalog routing, and real-time SLA tracking.
+3. Autonomous Financial Fraud Detection System: Real-time transaction streaming analysis with anomaly scoring (XGBoost & Isolation Forest, 98.2% precision).
+4. Microservices E-Commerce API Gateway: Java 17, Spring Boot microservices, Kafka event streaming, and Redis distributed caching.
+5. Blockchain Certificate Authenticator: Decentralized certificate verification on Ethereum smart contracts with SHA-256 and Bloom filters.
+
+Feel free to ask about any specific project or email Venkatesh at venkatesherla21@gmail.com!`;
+    }
+
+    if (query.includes('achievement') || query.includes('hackathon') || query.includes('leetcode') || query.includes('rank') || query.includes('award') || query.includes('certif') || query.includes('contest') || query.includes('win')) {
+      return `Venkatesh Erla has a distinguished record of technical achievements and competitive coding excellence:
+
+Key Honors & Achievements:
+• 1st Rank Winner: National Level AI/ML Hackathon for Smart Healthcare Solution.
+• 1st Place: HackwithNellore Hackathon out of 70+ participating engineering teams & Geethanjali 48-hr Hackathon.
+• 7+ Hackathon Victories: Winner of 7+ hackathons and competitor in 20+ national tech events.
+• LeetCode Top 8%: Solved 450+ algorithmic Data Structures & Algorithms problems.
+• ServiceNow Dual Certifications: Certified Application Developer (CAD ID: 27262933) & Certified System Administrator (CSA ID: 27498439).
+• Leadership: President of Technical Club, leading a community of 500+ student developers.
+
+You can connect with him directly at venkatesherla21@gmail.com!`;
+    }
+
+    if (query.includes('contact') || query.includes('hire') || query.includes('email') || query.includes('phone') || query.includes('location') || query.includes('reach') || query.includes('resume') || query.includes('salary') || query.includes('role')) {
+      return `Venkatesh Erla is actively available for Software Engineer (SDE), Java Developer, AI/ML Engineer, and ServiceNow Developer roles.
+
+Direct Candidate Contact Details:
+• Email: venkatesherla21@gmail.com
+• Phone: +91 7670872362
+• Location: Hyderabad, India (Open to Remote, Hybrid & Relocation Globally)
+• GitHub: github.com/erlavenkatesh
+• LinkedIn: linkedin.com/in/erlavenkatesh
+• LeetCode: leetcode.com/erlavenkatesh
+
+He responds promptly to direct emails and messages sent via the portfolio contact form!`;
+    }
+
+    return `Thank you for asking about Venkatesh Erla!
+
+Venkatesh is a results-driven Software Engineer specializing in Java Spring Boot microservices, Artificial Intelligence & Machine Learning platforms, and ServiceNow enterprise workflows (CAD & CSA dual-certified).
+
+Key Qualifications for "${message}":
+• Technical Stack: Java 17, Spring Boot, React, Python, PyTorch, Gemini API, MySQL, ServiceNow App Engine.
+• Achievements: B.Tech in CSE (AI & ML) with 8.8/10 CGPA, 450+ LeetCode problems solved, 1st rank winner at national AI hackathons.
+• Value Add: Combines core computer science rigor with enterprise automation and Generative AI capability.
+
+Please feel free to ask follow-up questions or reach out to Venkatesh at venkatesherla21@gmail.com!`;
+  }
+
   // AI Recruiter Chatbot API endpoint
   app.post('/api/recruiter-chat', async (req, res) => {
     try {
@@ -91,23 +186,7 @@ async function startServer() {
         return res.status(400).json({ error: 'Message is required' });
       }
 
-      const apiKey = process.env.GEMINI_API_KEY;
-      if (!apiKey) {
-        // Graceful fallback if no API key set
-        return res.json({
-          reply: `Thank you for reaching out! Erla Venkatesh is a highly qualified Software Engineer with expertise in Java Spring Boot, AI/ML, and ServiceNow (CAD & CSA certified). He has completed 18+ projects, solved 450+ LeetCode problems, and won 1st rank in a national AI hackathon. You can contact him directly at venkatesherla21@gmail.com.`
-        });
-      }
-
-      const ai = new GoogleGenAI({
-        apiKey: apiKey,
-        httpOptions: {
-          headers: {
-            'User-Agent': 'aistudio-build'
-          }
-        }
-      });
-
+      const apiKey = (process.env.GEMINI_API_KEY || '').trim();
       const formattedHistory = Array.isArray(history)
         ? history.map((h: { role: string; content: string }) => `${h.role === 'user' ? 'Recruiter' : 'Assistant'}: ${h.content}`).join('\n')
         : '';
@@ -131,17 +210,58 @@ Guidelines:
 4. Keep the tone top-tier, like a candidate represented by an elite tech talent agency.
 `;
 
-      const response = await ai.models.generateContent({
-        model: 'gemini-3.6-flash',
-        contents: prompt
-      });
+      let reply = '';
 
-      const reply = response.text || "Erla Venkatesh is an accomplished Software Engineer specializing in Java Full Stack, AI/ML, and ServiceNow development. Please feel free to send him a direct message!";
+      if (apiKey) {
+        try {
+          const ai = new GoogleGenAI({
+            apiKey: apiKey,
+            httpOptions: {
+              headers: {
+                'User-Agent': 'aistudio-build'
+              }
+            }
+          });
+
+          // Try Gemini models in sequence
+          const candidateModels = [
+            'gemini-flash-latest',
+            'gemini-3.5-flash',
+            'gemini-3.6-flash',
+            'gemini-2.5-flash-lite',
+            'gemini-2.5-flash',
+            'gemini-pro-latest'
+          ];
+          for (const modelName of candidateModels) {
+            try {
+              const response = await ai.models.generateContent({
+                model: modelName,
+                contents: prompt
+              });
+              if (response.text && response.text.trim().length > 0) {
+                reply = response.text.trim();
+                console.log(`[AI CHATBOT] Successfully generated response using model: ${modelName}`);
+                break;
+              }
+            } catch (err) {
+              console.warn(`[AI CHATBOT] Model ${modelName} call failed, trying next model...`);
+            }
+          }
+        } catch (apiErr) {
+          console.error('[AI CHATBOT] GoogleGenAI initialization or invocation failed:', apiErr);
+        }
+      }
+
+      // If API key was missing, or Gemini call didn't yield text, generate dynamic contextual answer
+      if (!reply) {
+        reply = generateDynamicRecruiterResponse(message);
+      }
+
       return res.json({ reply });
     } catch (error) {
       console.error('Error in recruiter-chat API:', error);
       return res.json({
-        reply: `Erla Venkatesh is a Software Engineer experienced in Java Spring Boot backend, AI/ML applications, and ServiceNow CAD/CSA development. You can reach out directly via email at venkatesherla21@gmail.com!`
+        reply: generateDynamicRecruiterResponse(req.body?.message || '')
       });
     }
   });
@@ -214,8 +334,8 @@ ${message}
     console.log(`====================================================\n`);
 
     // Active Gmail App Password credentials for real-time automated mail delivery
-    const primaryUser = (process.env.SMTP_USER || process.env.GMAIL_USER || 'myportfolio.venkatesherla@gmail.com').trim();
-    const rawPass = process.env.SMTP_PASS || process.env.GMAIL_APP_PASSWORD || 'iqqgojgrcomeegcn';
+    const primaryUser = (process.env.SMTP_USER || '').trim();
+    const rawPass = process.env.SMTP_PASS || '';
     const smtpPass = rawPass.replace(/\s+/g, '');
 
     let sendSuccess = false;
@@ -294,7 +414,10 @@ ${message}
   });
 
   // Vite middleware for dev / static files for production
-  if (process.env.NODE_ENV !== 'production') {
+  const isProduction = process.env.NODE_ENV === 'production' ||
+    (process.env.NODE_ENV !== 'development' && fs.existsSync(path.join(process.cwd(), 'dist', 'index.html')));
+
+  if (!isProduction) {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',

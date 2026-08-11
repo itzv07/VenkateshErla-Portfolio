@@ -1,3 +1,4 @@
+import passportPhoto from './PASSPORT PHOTO 2.png';
 import {
   SkillCategory,
   Project,
@@ -26,7 +27,7 @@ export const PERSONAL_INFO = {
   linkedin: 'https://linkedin.com/in/erlavenkatesh',
   leetcode: 'https://leetcode.com/erlavenkatesh',
   resumeDownloadUrl: '#resume-download',
-  avatarUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80',
+  avatarUrl: passportPhoto,
   metrics: [
     { label: 'Projects Completed', value: '18+' },
     { label: 'Certifications', value: '3' },
