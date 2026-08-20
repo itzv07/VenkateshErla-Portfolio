@@ -20,7 +20,7 @@
 
 ## 🌐 Portfolio
 
-**GitHub:**  
+**GitHub:**
 https://github.com/itzv07/VenkateshErla-Portfolio
 
 > Add the production URL here after deploying the portfolio.
