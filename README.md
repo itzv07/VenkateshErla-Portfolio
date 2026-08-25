@@ -4,7 +4,7 @@
   <strong>Software Engineer · Java Developer · AI/ML Engineer · ServiceNow Developer</strong>
 </p>
 
-<p align="center">
+<p align="center">.   
   A modern, interactive personal portfolio built to showcase Venkatesh Erla's engineering experience, projects, technical skills, certifications, achievements, and AI-powered recruiter experience.
 </p>
 
