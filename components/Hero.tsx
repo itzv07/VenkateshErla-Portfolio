@@ -8,7 +8,7 @@ import { CursorArrowRaysIcon, ChartBarIcon, SparklesIcon } from '@heroicons/reac
 
 // Component that simulates drawing a wireframe then filling it with life
 const DrawingTransformation = ({ 
-  initialIcon: InitialIcon, 
+  initialIcon: InitialIcon,    
   finalIcon: FinalIcon, 
   label,
   delay, 
