@@ -7,7 +7,7 @@ import { Skills } from './src/components/Skills';
 import { Experience } from './src/components/Experience';
 import { Projects } from './src/components/Projects';
 import { Certifications } from './src/components/Certifications';
-import { Achievements } from './src/components/Achievements';
+import { Achievements } from './src/components/Achievements'; 
 import { LeadershipEngagement } from './src/components/LeadershipEngagement';
 import { SoftSkills } from './src/components/SoftSkills';
 import { ContactSection } from './src/components/ContactSection';
