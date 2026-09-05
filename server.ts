@@ -86,7 +86,7 @@ async function startServer() {
   });
 
   function generateDynamicRecruiterResponse(message: string): string {
-    const query = message.toLowerCase();
+    const query = message.toLowerCase();    
 
     if (query.includes('java') || query.includes('spring') || query.includes('backend') || query.includes('microservice') || query.includes('sql') || query.includes('kafka') || query.includes('rest') || query.includes('hibernate')) {
       return `Venkatesh Erla is a highly skilled Java Full Stack & Microservices Developer with extensive backend engineering experience.
@@ -102,7 +102,7 @@ Feel free to ask more about his Spring Boot projects or contact Venkatesh direct
 
     if (query.includes('servicenow') || query.includes('cad') || query.includes('csa') || query.includes('itsm') || query.includes('widget') || query.includes('flow') || query.includes('jelly') || query.includes('spoke')) {
       return `Venkatesh Erla is a Dual-Certified ServiceNow Specialist holding both CAD and CSA enterprise credentials.
-
+       
 ServiceNow Credentials & Technical Expertise:
 • ServiceNow CAD (Certified Application Developer - ID: 27262933): Custom Scoped Applications, App Engine Studio, Flow Designer multi-step automation, IntegrationHub REST spokes.
 • ServiceNow CSA (Certified System Administrator - ID: 27498439): Platform configuration, ACL security rules, CMDB management, user/role access control, ITSM modules (Incident, Problem, Change).
