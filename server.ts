@@ -275,7 +275,7 @@ Guidelines:
 
     const timestamp = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
     const senderProxyEmail = 'myportfolio.venkatesherla@gmail.com';
-    const recipientEmail = 'myportfolio.venkatesherla@gmail.com';
+    const recipientEmail = 'myportfolio.venkatesherla@gmail.com';   
     const mailSubject = `[Portfolio Direct Message] ${subject || 'New Message'} from ${name}`;
 
     const htmlBody = `
