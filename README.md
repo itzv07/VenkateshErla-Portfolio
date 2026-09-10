@@ -11,7 +11,7 @@
 <p align="center">
   <a href="https://github.com/itzv07">GitHub</a>
   ·
-  <a href="https://www.linkedin.com/in/erlavenkatesh/">LinkedIn</a>
+  <a href="https://www.linkedin.com/in/erlavenkatesh/">LinkedIn</a>  
   ·
   <a href="mailto:venkatesherla21@gmail.com">Email</a>
 </p>
