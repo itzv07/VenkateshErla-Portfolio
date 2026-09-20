@@ -38,7 +38,7 @@ The portfolio is designed as an interactive professional profile rather than a s
 - Software engineering and Java development
 - Spring Boot and backend engineering
 - Artificial Intelligence and Machine Learning
-- Generative AI and LLM applications
+- Generative AI and LLM applications 
 - React and TypeScript frontend development
 - ServiceNow CAD & CSA expertise
 - Blockchain development
