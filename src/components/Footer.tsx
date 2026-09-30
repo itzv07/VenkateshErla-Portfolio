@@ -16,8 +16,7 @@ import {
   Brain,
   FolderGit2,
   Compass,
-  Copy,
-  RotateCcw
+  Copy
 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { PERSONAL_INFO } from '../data/portfolioData';
@@ -171,6 +170,13 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
 
           {/* Card Content Grid */}
+          {isSuccess ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="w-20 h-20 rounded-full bg-emerald-400/20 border-2 border-emerald-400 flex items-center justify-center animate-bounce-once">
+                <CheckCircle className="w-12 h-12 text-emerald-400" strokeWidth={2} />
+              </div>
+            </div>
+          ) : (
           <form onSubmit={handleReachMeSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             {/* Left Inputs Column */}
@@ -256,74 +262,34 @@ export const Footer: React.FC<FooterProps> = ({
                   </a>
                 </p>
 
-                {/* ✅ SUCCESS BANNER — always visible after submit */}
-                {isSuccess && (
-                  <div className="p-4 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-xs text-white space-y-3 shadow-xl backdrop-blur-md animate-pulse-once">
-                    <div className="flex items-center gap-3 font-bold text-emerald-100 text-sm">
-                      <div className="w-8 h-8 rounded-full bg-emerald-400 flex items-center justify-center shrink-0">
-                        <CheckCircle className="w-5 h-5 text-white" />
-                      </div>
-                      <span>Message sent successfully, {submittedName}! 🎉</span>
-                    </div>
-                    <p className="text-emerald-100/90 leading-relaxed pl-11">
-                      {submissionFeedback || `Venkatesh will get back to you within 24–48 hours.`}
-                    </p>
-                    <div className="flex items-center gap-2.5 flex-wrap pl-11 pt-1">
-                      <a
-                        href={`mailto:${PERSONAL_INFO.email}?subject=${encodeURIComponent('Reach Me Inquiry')}&body=${encodeURIComponent('Hi Venkatesh, I would like to connect with you.')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => playPopSound()}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold text-[11px] transition-all shadow-md"
-                      >
-                        <Mail className="w-3.5 h-3.5" />
-                        <span>Open Email App</span>
-                      </a>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          playPopSound();
-                          setIsSuccess(false);
-                          setSubmissionFeedback(null);
-                          setSubmittedName('');
-                        }}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-[11px] border border-white/20 transition-all"
-                      >
-                        <RotateCcw className="w-3.5 h-3.5" />
-                        <span>Send Another</span>
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {!isSuccess && (
-                  <div className="flex items-center justify-end">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white text-rose-700 hover:bg-rose-50 font-extrabold text-xs tracking-wider uppercase flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
-                          </svg>
-                          <span>Sending...</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>Send Message</span>
-                          <Send className="w-4 h-4" />
-                        </>
-                      )}
-                    </button>
-                  </div>
-                )}
+                <div className="flex items-center justify-end">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white text-rose-700 hover:bg-rose-50 font-extrabold text-xs tracking-wider uppercase flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                        </svg>
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Send Message</span>
+                        <Send className="w-4 h-4" />
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
 
           </form>
+          )}
+
 
         </div>
       </div>
