@@ -25,7 +25,7 @@ export const PERSONAL_INFO = {
   location: 'Hyderabad, India (Open to Remote & Relocation)',
   github: 'https://github.com/itzv07/',
   linkedin: 'https://linkedin.com/in/erlavenkatesh',
-  leetcode: 'https://leetcode.com/u/itzv07/',
+  leetcode: 'https://leetcode.com/u/ErlaVenkatesh/',
   resumeDownloadUrl: '#resume-download',
   avatarUrl: passportPhoto,
   metrics: [

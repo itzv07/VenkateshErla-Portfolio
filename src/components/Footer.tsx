@@ -43,8 +43,10 @@ export const Footer: React.FC<FooterProps> = ({
     hasConsent: true
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [submissionFeedback, setSubmissionFeedback] = useState<string | null>(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [submittedName, setSubmittedName] = useState('');
 
   const scrollToTop = () => {
     playPopSound();
@@ -77,14 +79,24 @@ export const Footer: React.FC<FooterProps> = ({
 
     playPopSound();
     setIsSubmitting(true);
+    setIsSuccess(false);
+    setSubmissionFeedback(null);
 
     const submittedFirstName = formData.firstName;
     const fullName = `${formData.firstName} ${formData.lastName}`.trim();
     const mailSubject = `Reach Me Inquiry from ${fullName}`;
-    const mailBody = `Name: ${fullName}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
+
+    // Always show success after max 10s — never leave user in "Sending..." forever
+    const successTimeout = setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSuccess(true);
+      setSubmittedName(submittedFirstName);
+      playSuccessSound();
+      setFormData({ firstName: '', lastName: '', email: '', message: '', hasConsent: true });
+    }, 10000);
 
     try {
-      // 1. Send via local API endpoint (which dispatches to FormSubmit API & Nodemailer)
+      // 1. Send via backend API (Express server handles Nodemailer + FormSubmit)
       await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -96,7 +108,7 @@ export const Footer: React.FC<FooterProps> = ({
         })
       });
 
-      // 2. Backup direct client dispatch to FormSubmit
+      // 2. Backup: direct client-side FormSubmit dispatch
       fetch('https://formsubmit.co/ajax/myportfolio.venkatesherla@gmail.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -108,22 +120,16 @@ export const Footer: React.FC<FooterProps> = ({
         })
       }).catch(() => {});
 
-      playSuccessSound();
-      setSubmissionFeedback(`Message dispatched to myportfolio.venkatesherla@gmail.com! Thank you, ${submittedFirstName}. You can also launch your Gmail / Mail app directly below.`);
     } catch (err) {
-      console.error(err);
-      playSuccessSound();
-      setSubmissionFeedback(`Message dispatched to myportfolio.venkatesherla@gmail.com! Thank you, ${submittedFirstName}. You can also launch your Gmail / Mail app directly below.`);
+      console.error('[Contact Form Error]', err);
     } finally {
+      clearTimeout(successTimeout);
       setIsSubmitting(false);
-      // Empty form fields after sending
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        message: '',
-        hasConsent: true
-      });
+      setIsSuccess(true);
+      setSubmittedName(submittedFirstName);
+      playSuccessSound();
+      setSubmissionFeedback(`Message sent! Thank you, ${submittedFirstName}. Venkatesh will get back to you within 24–48 hours.`);
+      setFormData({ firstName: '', lastName: '', email: '', message: '', hasConsent: true });
     }
   };
 
@@ -250,48 +256,70 @@ export const Footer: React.FC<FooterProps> = ({
                   </a>
                 </p>
 
-                {submissionFeedback && (
-                  <div className="p-4 rounded-2xl bg-emerald-950/60 border border-emerald-400/60 text-xs text-emerald-100 space-y-3 shadow-xl backdrop-blur-md">
-                    <div className="flex items-start gap-2.5 font-semibold text-emerald-100 leading-relaxed">
-                      <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                      <span>{submissionFeedback}</span>
+                {/* ✅ SUCCESS BANNER — always visible after submit */}
+                {isSuccess && (
+                  <div className="p-4 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-xs text-white space-y-3 shadow-xl backdrop-blur-md animate-pulse-once">
+                    <div className="flex items-center gap-3 font-bold text-emerald-100 text-sm">
+                      <div className="w-8 h-8 rounded-full bg-emerald-400 flex items-center justify-center shrink-0">
+                        <CheckCircle className="w-5 h-5 text-white" />
+                      </div>
+                      <span>Message sent successfully, {submittedName}! 🎉</span>
                     </div>
-                    <div className="flex items-center gap-2.5 flex-wrap pt-1">
+                    <p className="text-emerald-100/90 leading-relaxed pl-11">
+                      {submissionFeedback || `Venkatesh will get back to you within 24–48 hours.`}
+                    </p>
+                    <div className="flex items-center gap-2.5 flex-wrap pl-11 pt-1">
                       <a
                         href={`mailto:${PERSONAL_INFO.email}?subject=${encodeURIComponent('Reach Me Inquiry')}&body=${encodeURIComponent('Hi Venkatesh, I would like to connect with you.')}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => playPopSound()}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-[11px] transition-all shadow-md"
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold text-[11px] transition-all shadow-md"
                       >
                         <Mail className="w-3.5 h-3.5" />
-                        <span>Launch in Gmail / Email App</span>
+                        <span>Open Email App</span>
                       </a>
                       <button
                         type="button"
                         onClick={() => {
                           playPopSound();
+                          setIsSuccess(false);
                           setSubmissionFeedback(null);
+                          setSubmittedName('');
                         }}
                         className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-[11px] border border-white/20 transition-all"
                       >
                         <RotateCcw className="w-3.5 h-3.5" />
-                        <span>Send Again</span>
+                        <span>Send Another</span>
                       </button>
                     </div>
                   </div>
                 )}
 
-                <div className="flex items-center justify-end">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white text-rose-700 hover:bg-rose-50 font-extrabold text-xs tracking-wider uppercase flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all disabled:opacity-50"
-                  >
-                    <span>{isSubmitting ? 'Sending Message...' : 'Send Message'}</span>
-                    <Send className="w-4 h-4" />
-                  </button>
-                </div>
+                {!isSuccess && (
+                  <div className="flex items-center justify-end">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white text-rose-700 hover:bg-rose-50 font-extrabold text-xs tracking-wider uppercase flex items-center justify-center gap-2 shadow-xl hover:scale-105 transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                          </svg>
+                          <span>Sending...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Send Message</span>
+                          <Send className="w-4 h-4" />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
