@@ -333,77 +333,44 @@ ${message}
     console.log(`Message Body:\n${message}`);
     console.log(`====================================================\n`);
 
-    // Active Gmail App Password credentials for real-time automated mail delivery
-    const primaryUser = (process.env.SMTP_USER || '').trim();
-    const rawPass = process.env.SMTP_PASS || '';
-    const smtpPass = rawPass.replace(/\s+/g, '');
+    // Gmail App Password credentials for real-time automated mail delivery
+    const smtpUser = (process.env.SMTP_USER || 'myportfolio.venkatesherla@gmail.com').trim();
+    const smtpPass = (process.env.SMTP_PASS || process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '');
 
     let sendSuccess = false;
 
-    // Method 1: FormSubmit API dispatch directly to recipient
-    try {
-      const fsResponse = await fetch('https://formsubmit.co/ajax/myportfolio.venkatesherla@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          _subject: mailSubject,
-          message: message,
-          _template: 'table'
-        })
-      });
-      const fsData = await fsResponse.json();
-      if (fsData && (fsData.success === 'true' || fsData.success === true)) {
-        console.log(`[FORMSUBMIT SUCCESS] Directly dispatched to ${recipientEmail}`);
-        sendSuccess = true;
-      }
-    } catch (fsErr) {
-      console.error('[FORMSUBMIT DISPATCH ATTEMPT]', fsErr);
-    }
+    // Primary Method: Nodemailer via Gmail SMTP with App Password
+    if (smtpUser && smtpPass) {
+      const transportConfigs = [
+        { host: 'smtp.gmail.com', port: 587, secure: false, auth: { user: smtpUser, pass: smtpPass } },
+        { host: 'smtp.gmail.com', port: 465, secure: true, auth: { user: smtpUser, pass: smtpPass } },
+        { service: 'gmail', auth: { user: smtpUser, pass: smtpPass } }
+      ];
 
-    // Method 2: Nodemailer fallback
-    if (!sendSuccess) {
-      const candidateUsers = Array.from(new Set([
-        primaryUser,
-        'venkatesherla21@gmail.com',
-        'myportfolio.venkatesherla@gmail.com'
-      ])).filter(Boolean);
-
-      for (const userAccount of candidateUsers) {
+      for (const config of transportConfigs) {
         if (sendSuccess) break;
-
-        const transportConfigs = [
-          { service: 'gmail', auth: { user: userAccount, pass: smtpPass } },
-          { host: 'smtp.gmail.com', port: 587, secure: false, auth: { user: userAccount, pass: smtpPass } },
-          { host: 'smtp.gmail.com', port: 465, secure: true, auth: { user: userAccount, pass: smtpPass } }
-        ];
-
-        for (const config of transportConfigs) {
-          if (sendSuccess) break;
-          try {
-            const transporter = nodemailer.createTransport(config as any);
-            await transporter.sendMail({
-              from: `"${name} via Portfolio" <${userAccount}>`,
-              to: recipientEmail,
-              replyTo: email,
-              subject: mailSubject,
-              html: htmlBody
-            });
-            console.log(`[MAIL DISPATCH] Automated message delivered via ${userAccount} to ${recipientEmail}`);
-            sendSuccess = true;
-          } catch (err) {
-            // Quietly handle transport attempts
-          }
+        try {
+          const transporter = nodemailer.createTransport(config as any);
+          await transporter.verify();
+          await transporter.sendMail({
+            from: `"${name} via Portfolio" <${smtpUser}>`,
+            to: recipientEmail,
+            replyTo: email,
+            subject: mailSubject,
+            html: htmlBody
+          });
+          console.log(`[MAIL DISPATCH] ✅ Email sent via ${smtpUser} (${(config as any).host || 'gmail service'}) to ${recipientEmail}`);
+          sendSuccess = true;
+        } catch (err: any) {
+          console.warn(`[MAIL DISPATCH] ⚠️ Config attempt failed: ${err?.message || err}`);
         }
       }
+    } else {
+      console.warn('[MAIL DISPATCH] ⚠️ SMTP credentials not configured — skipping email delivery.');
     }
 
     if (!sendSuccess) {
-      console.log(`[MAIL DISPATCH] Message captured and stored for ${recipientEmail}.`);
+      console.log(`[MAIL DISPATCH] ℹ️ Email delivery failed or unconfigured. Message from ${name} <${email}> was logged above.`);
     }
 
     res.json({
