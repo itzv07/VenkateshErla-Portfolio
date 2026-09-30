@@ -139,7 +139,7 @@ export const Achievements: React.FC<AchievementsProps> = ({ theme }) => {
 
             <div className="pt-2 flex justify-end">
               <a
-                href="https://leetcode.com/erlavenkatesh"
+                href="https://leetcode.com/u/itzv07/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-xs font-semibold text-amber-400 hover:text-amber-300 transition-colors"

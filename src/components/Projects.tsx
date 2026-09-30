@@ -233,7 +233,7 @@ export const Projects: React.FC<ProjectsProps> = ({ theme }) => {
         {/* Bottom CTA Button: "Explore All My Repositories" (Exact as in reference video) */}
         <div className="mt-14 text-center">
           <a
-            href="https://github.com/erlavenkatesh"
+            href="https://github.com/itzv07"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => playPopSound()}

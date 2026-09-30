@@ -25,7 +25,7 @@ export const PERSONAL_INFO = {
   location: 'Hyderabad, India (Open to Remote & Relocation)',
   github: 'https://github.com/itzv07/',
   linkedin: 'https://linkedin.com/in/erlavenkatesh',
-  leetcode: 'https://leetcode.com/erlavenkatesh',
+  leetcode: 'https://leetcode.com/u/itzv07/',
   resumeDownloadUrl: '#resume-download',
   avatarUrl: passportPhoto,
   metrics: [
@@ -134,8 +134,8 @@ export const PROJECTS: Project[] = [
       'Recruiter candidate pipeline analytics dashboard with export options'
     ],
     techStack: ['Java', 'Spring Boot', 'React.js', 'Python', 'Generative AI', 'PyTorch', 'MySQL', 'REST API'],
-    githubUrl: 'https://github.com/erlavenkatesh/ai-resume-matcher',
-    liveUrl: 'https://github.com/erlavenkatesh/ai-resume-matcher',
+    githubUrl: 'https://github.com/itzv07',
+    liveUrl: 'https://github.com/itzv07',
     metrics: [
       { label: 'Match Accuracy', value: '95%' },
       { label: 'Screening Speed', value: '10x Faster' },
@@ -158,8 +158,8 @@ export const PROJECTS: Project[] = [
       'Java Spring Boot & Web3j integration layer connecting blockchain ledger to MySQL'
     ],
     techStack: ['Java', 'Ethereum', 'Smart Contracts', 'Solidity', 'MySQL', 'SHA-256', 'Web3j', 'Bloom Filters'],
-    githubUrl: 'https://github.com/erlavenkatesh/blockchain-certificate-auth',
-    liveUrl: 'https://github.com/erlavenkatesh/blockchain-certificate-auth',
+    githubUrl: 'https://github.com/itzv07',
+    liveUrl: 'https://github.com/itzv07',
     metrics: [
       { label: 'Latency Cut', value: '65%' },
       { label: 'Integrity', value: 'Immutable' }
@@ -181,8 +181,8 @@ export const PROJECTS: Project[] = [
       'Cross-functional team leadership managing Agile sprints across backend and frontend'
     ],
     techStack: ['Python', 'Firebase', 'MySQL', 'React.js', 'REST API', 'AES-256', 'Tailwind CSS'],
-    githubUrl: 'https://github.com/erlavenkatesh/healthlink-telehealth',
-    liveUrl: 'https://github.com/erlavenkatesh/healthlink-telehealth',
+    githubUrl: 'https://github.com/itzv07',
+    liveUrl: 'https://github.com/itzv07',
     metrics: [
       { label: 'Team Led', value: '4 Engineers' },
       { label: 'Data Ingestion', value: 'Real-Time' }
@@ -204,7 +204,7 @@ export const PROJECTS: Project[] = [
       'Optimized MySQL relational database schema with transactional integrity'
     ],
     techStack: ['Java', 'Spring Boot', 'REST API', 'React.js', 'MySQL', 'Spring Security', 'Tailwind CSS'],
-    githubUrl: 'https://github.com/erlavenkatesh/voting-management-system',
+    githubUrl: 'https://github.com/itzv07',
     metrics: [
       { label: 'Security', value: '100% Tamper Proof' },
       { label: 'Response Time', value: '<50ms' }
