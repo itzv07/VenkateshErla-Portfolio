@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import emailjs from '@emailjs/browser';
 
-// ── EmailJS credentials (set these after creating your EmailJS account) ──
-const EMAILJS_SERVICE_ID  = 'service_portfolio';   // from emailjs.com → Email Services
-const EMAILJS_TEMPLATE_ID = 'template_reachme';    // from emailjs.com → Email Templates
-const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';     // from emailjs.com → Account → API Keys
+// ── EmailJS credentials ──
+const EMAILJS_SERVICE_ID  = 'service_portfolio';
+const EMAILJS_TEMPLATE_ID = 'template_reachme';    // ⚠️ verify this in EmailJS → Template → Settings tab
+const EMAILJS_PUBLIC_KEY  = 'Gxp6g-uW8unvalIXq';
+
 import {
   ArrowUp,
   Mail,
@@ -94,11 +95,10 @@ export const Footer: React.FC<FooterProps> = ({
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
-          from_name:    fullName,
-          from_email:   formData.email,
-          message:      formData.message,
-          to_name:      'Venkatesh Erla',
-          reply_to:     formData.email,
+          name:     fullName,
+          email:    formData.email,
+          message:  formData.message,
+          reply_to: formData.email,
         },
         EMAILJS_PUBLIC_KEY
       );
