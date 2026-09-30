@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
+
+// ── EmailJS credentials (set these after creating your EmailJS account) ──
+const EMAILJS_SERVICE_ID  = 'service_portfolio';   // from emailjs.com → Email Services
+const EMAILJS_TEMPLATE_ID = 'template_reachme';    // from emailjs.com → Email Templates
+const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';     // from emailjs.com → Account → API Keys
 import {
   ArrowUp,
   Mail,
@@ -43,7 +49,6 @@ export const Footer: React.FC<FooterProps> = ({
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [submissionFeedback, setSubmissionFeedback] = useState<string | null>(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [submittedName, setSubmittedName] = useState('');
 
@@ -79,55 +84,31 @@ export const Footer: React.FC<FooterProps> = ({
     playPopSound();
     setIsSubmitting(true);
     setIsSuccess(false);
-    setSubmissionFeedback(null);
 
     const submittedFirstName = formData.firstName;
     const fullName = `${formData.firstName} ${formData.lastName}`.trim();
-    const mailSubject = `Reach Me Inquiry from ${fullName}`;
-
-    // Always show success after max 10s — never leave user in "Sending..." forever
-    const successTimeout = setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setSubmittedName(submittedFirstName);
-      playSuccessSound();
-      setFormData({ firstName: '', lastName: '', email: '', message: '', hasConsent: true });
-    }, 10000);
 
     try {
-      // 1. Send via backend API (Express server handles Nodemailer + FormSubmit)
-      await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: fullName,
-          email: formData.email,
-          subject: mailSubject,
-          message: formData.message
-        })
-      });
-
-      // 2. Backup: direct client-side FormSubmit dispatch
-      fetch('https://formsubmit.co/ajax/myportfolio.venkatesherla@gmail.com', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          name: fullName,
-          email: formData.email,
-          _subject: mailSubject,
-          message: formData.message
-        })
-      }).catch(() => {});
-
+      // EmailJS — sends directly from browser over HTTPS, bypasses all SMTP/server issues
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name:    fullName,
+          from_email:   formData.email,
+          message:      formData.message,
+          to_name:      'Venkatesh Erla',
+          reply_to:     formData.email,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
     } catch (err) {
-      console.error('[Contact Form Error]', err);
+      console.error('[EmailJS Error]', err);
     } finally {
-      clearTimeout(successTimeout);
       setIsSubmitting(false);
       setIsSuccess(true);
       setSubmittedName(submittedFirstName);
       playSuccessSound();
-      setSubmissionFeedback(`Message sent! Thank you, ${submittedFirstName}. Venkatesh will get back to you within 24–48 hours.`);
       setFormData({ firstName: '', lastName: '', email: '', message: '', hasConsent: true });
     }
   };
