@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  ExternalLink,
   Sparkles,
   Search,
   CheckCircle2,
@@ -92,38 +91,25 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, theme, setAct
         <div className={`pt-4 border-t flex flex-wrap items-center justify-between gap-3 ${
           theme === 'dark' ? 'border-zinc-800/60' : 'border-zinc-200'
         }`}>
-          <div className="flex items-center gap-2.5">
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => playPopSound()}
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold border transition-all ${
-                  theme === 'dark'
-                    ? 'bg-zinc-800 border-zinc-700 text-zinc-200 hover:bg-zinc-700 hover:text-white'
-                    : 'bg-zinc-100 border-zinc-200 text-zinc-800 hover:bg-zinc-200'
-                }`}
-              >
-                <GithubIcon className="w-3.5 h-3.5" />
-                <span>Github</span>
-              </a>
-            )}
+          {/* GitHub Button */}
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => playPopSound()}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold border transition-all duration-200 hover:scale-[1.03] ${
+                theme === 'dark'
+                  ? 'bg-zinc-800 border-zinc-700 text-zinc-200 hover:bg-zinc-700 hover:border-rose-500/40 hover:text-white'
+                  : 'bg-zinc-100 border-zinc-200 text-zinc-800 hover:bg-zinc-200 hover:border-rose-400/40'
+              }`}
+            >
+              <GithubIcon className="w-3.5 h-3.5" />
+              <span>GitHub</span>
+            </a>
+          )}
 
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => playPopSound()}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-mono font-bold text-white shadow-md shadow-rose-600/20 transition-all"
-              >
-                <ExternalLink className="w-3.5 h-3.5" />
-                <span>Live Demo</span>
-              </a>
-            )}
-          </div>
-
+          {/* View Architecture Link */}
           <button
             onClick={() => {
               playPopSound();
@@ -353,26 +339,14 @@ export const Projects: React.FC<ProjectsProps> = ({ theme }) => {
                     href={activeProjectModal.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`flex items-center gap-2 px-5 py-2.5 rounded-xl border text-xs font-mono font-bold ${
+                    className={`flex items-center gap-2 px-5 py-2.5 rounded-xl border text-xs font-mono font-bold transition-all hover:scale-[1.02] ${
                       theme === 'dark'
-                        ? 'border-zinc-700 bg-zinc-900 hover:bg-zinc-800 text-white'
-                        : 'border-zinc-300 bg-white hover:bg-zinc-50 text-zinc-800 shadow-sm'
+                        ? 'border-zinc-700 bg-zinc-900 hover:bg-zinc-800 hover:border-rose-500/40 text-white'
+                        : 'border-zinc-300 bg-white hover:bg-zinc-50 hover:border-rose-400/40 text-zinc-800 shadow-sm'
                     }`}
                   >
                     <GithubIcon className="w-4 h-4" />
-                    <span>View GitHub Repo</span>
-                  </a>
-                )}
-
-                {activeProjectModal.liveUrl && (
-                  <a
-                    href={activeProjectModal.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-mono font-bold text-white shadow-lg shadow-rose-600/30"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    <span>Launch Live Demo</span>
+                    <span>View on GitHub</span>
                   </a>
                 )}
               </div>
