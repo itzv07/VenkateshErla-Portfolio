@@ -337,19 +337,37 @@ ${message}
     const smtpUser = (process.env.SMTP_USER || 'myportfolio.venkatesherla@gmail.com').trim();
     const smtpPass = (process.env.SMTP_PASS || process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '');
 
+    // Diagnostic: log what credentials were loaded (mask password)
+    console.log(`[MAIL CONFIG] SMTP_USER env: "${process.env.SMTP_USER || 'NOT SET'}"`);
+    console.log(`[MAIL CONFIG] SMTP_PASS env length: ${(process.env.SMTP_PASS || '').length} chars`);
+    console.log(`[MAIL CONFIG] GMAIL_APP_PASSWORD env length: ${(process.env.GMAIL_APP_PASSWORD || '').length} chars`);
+    console.log(`[MAIL CONFIG] Using smtpUser="${smtpUser}", smtpPass length=${smtpPass.length}`);
+
     let sendSuccess = false;
 
     // Primary Method: Nodemailer via Gmail SMTP with App Password
     if (smtpUser && smtpPass) {
       const transportConfigs = [
-        { host: 'smtp.gmail.com', port: 587, secure: false, auth: { user: smtpUser, pass: smtpPass } },
-        { host: 'smtp.gmail.com', port: 465, secure: true, auth: { user: smtpUser, pass: smtpPass } },
-        { service: 'gmail', auth: { user: smtpUser, pass: smtpPass } }
+        {
+          host: 'smtp.gmail.com',
+          port: 587,
+          secure: false,
+          auth: { user: smtpUser, pass: smtpPass },
+          tls: { rejectUnauthorized: false }
+        },
+        {
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true,
+          auth: { user: smtpUser, pass: smtpPass },
+          tls: { rejectUnauthorized: false }
+        }
       ];
 
       for (const config of transportConfigs) {
         if (sendSuccess) break;
         try {
+          console.log(`[MAIL DISPATCH] Trying smtp.gmail.com:${config.port}...`);
           const transporter = nodemailer.createTransport(config as any);
           await transporter.verify();
           await transporter.sendMail({
@@ -359,18 +377,18 @@ ${message}
             subject: mailSubject,
             html: htmlBody
           });
-          console.log(`[MAIL DISPATCH] ✅ Email sent via ${smtpUser} (${(config as any).host || 'gmail service'}) to ${recipientEmail}`);
+          console.log(`[MAIL DISPATCH] ✅ Email sent via smtp.gmail.com:${config.port} to ${recipientEmail}`);
           sendSuccess = true;
         } catch (err: any) {
-          console.warn(`[MAIL DISPATCH] ⚠️ Config attempt failed: ${err?.message || err}`);
+          console.error(`[MAIL DISPATCH] ❌ smtp.gmail.com:${config.port} failed: ${err?.message || err}`);
         }
       }
     } else {
-      console.warn('[MAIL DISPATCH] ⚠️ SMTP credentials not configured — skipping email delivery.');
+      console.error('[MAIL DISPATCH] ❌ SMTP credentials missing — set SMTP_PASS in Render Environment Variables!');
     }
 
     if (!sendSuccess) {
-      console.log(`[MAIL DISPATCH] ℹ️ Email delivery failed or unconfigured. Message from ${name} <${email}> was logged above.`);
+      console.error(`[MAIL DISPATCH] ❌ All delivery attempts failed. Check Render env vars and Gmail App Password.`);
     }
 
     res.json({
